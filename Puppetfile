@@ -16,14 +16,15 @@ mod "samuelson/dockeragent"
 # Module for installing and managing docker
 mod 'puppetlabs/docker'
 
-# This module declares exec resources to 
-# create global sync points for reloading systemd.
-mod 'saz-ssh', '9.0.0'
+# The module uses exported resources to manage ssh keys and 
+# removes ssh keys that are not managed by puppet.  
+mod 'ghoneycutt-ssh', '3.62.0'
 
-# This module declares exec resources to create 
-# global sync points for reloading systemd.
-mod 'puppet-systemd', '3.10.0'
+# common module to be applied to all nodes
+mod 'ghoneycutt-common', '1.10.0'
 
-# The inifile module lets Puppet manage settings 
-# stored in INI-style configuration files.
-mod 'puppetlabs-inifile', '5.3.0'
+# The firewall module lets you manage firewall rules with Puppet.
+mod 'puppetlabs-firewall', '3.5.0'
+
+# Manage SSH authorized_keys, and ssh_known_hosts files.
+mod 'puppetlabs-sshkeys_core', '2.3.0'
