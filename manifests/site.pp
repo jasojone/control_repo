@@ -1,5 +1,5 @@
 node default {
-    file { '/root/README':
+  file { '/root/README':
     ensure  => file,
     content => 'This is a readme',
     owner   => 'root',
@@ -8,12 +8,13 @@ node default {
 
 node 'master.puppet.vm' {
   include role::master_server
-  file {'/root/README':
+  file { '/root/README':
     ensure  => file,
     content => "Welcome to ${fqdn}\n",
-    owner => 'root',
+    owner   => 'root',
   }
 }
+
 node 'minetest.puppet.vm' {
   include role::minecraft_server
 }
@@ -25,4 +26,3 @@ node /^web/ {
 node /^db/ {
   include role::db_server
 }
-
