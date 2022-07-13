@@ -24,6 +24,6 @@ class minecraft (
   service { 'minecraft':
     ensure => running, # minecraft service must be started before minecraft service is started
     enable => true, # minecraft service must be enabled before minecraft service is started
-    reqire => [package['java'], file["${install_dir}"], file['/etc/systemd/system/minecraft.service']], # minecraft service must be started before minecraft service is started
+    reqire => [package['java'], File["${install_dir}/eula.txt"], file['/etc/systemd/system/minecraft.service']], # minecraft service must be started before minecraft service is started
   }
 }
