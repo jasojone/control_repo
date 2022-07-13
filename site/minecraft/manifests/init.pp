@@ -18,8 +18,10 @@ class minecraft (
     content => 'eula=true', # minecraft EULA must be accepted before minecraft service is started
   }
   file { '/etc/systemd/system/minecraft.service':
-    ensure => file, # minecraft service must be created before minecraft service is started
-    source => 'puppet:///modules/minecraft/minecraft.service', # minecraft service must be created before minecraft service is started
+    ensure  => file, # minecraft service must be created before minecraft service is started
+    content => epp('minecraft/minecraft.service', {
+        install_dir => $install_dir,
+    })
   }
   service { 'minecraft':
     ensure => running, # minecraft service must be started before minecraft service is started
