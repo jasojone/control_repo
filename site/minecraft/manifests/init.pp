@@ -1,13 +1,13 @@
 class minecraft (
   $url = 'https://s3.amazonaws.com/Minecraft.Download/versions/1.12.2/minecraft_server.1.12.2.jar', #url to download minecraft server,  default is 1.12.2
   $install_dir = '/opt/minecraft' # directory to install minecraft server 
-){
+) {
   file { $install_dir:
     ensure => directory,
   }
-  file {"${install_dir}/minecraft_server.jar": 
-    ensure => file, 
-    source => &url, 
+  file { "${ install_dir}/minecraft_server.jar":
+    ensure => file,
+    source => $url,
     before => Service['minecraft'], # minecraft_server.jar must be downloaded before minecraft service is started
   }
   package { 'java':
