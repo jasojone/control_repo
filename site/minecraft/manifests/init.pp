@@ -1,24 +1,29 @@
-class minecraft {
-  file { '/opt/minecraft':
+class minecraft (
+  $url = 'https://s3.amazonaws.com/Minecraft.Download/versions/1.12.2/minecraft_server.1.12.2.jar', #url to download minecraft server,  default is 1.12.2
+  $install_dir = '/opt/minecraft' # directory to install minecraft server 
+){
+  file { $install_dir:
     ensure => directory,
   }
-  file { '/opt/minecraft/minecraft_server.jar':
-    ensure => file,
-    source => 'https://s3.amazonaws.com/Minecraft.Download/versions/1.12.2/minecraft_server.1.12.2.jar',
+  file {"${install_dir}/minecraft_server.jar": 
+    ensure => file, 
+    source => &url, 
+    before => Service['minecraft'], # minecraft_server.jar must be downloaded before minecraft service is started
   }
   package { 'java':
-    ensure => present,
+    ensure => present, # java is required to run minecraft
   }
-  file { '/opt/minecraft/eula.txt':
-    ensure  => file,
-    content => 'eula=true',
+  file { "${install_dir}/eula.txt":
+    ensure  => file, # eula.txt must be created before minecraft service is started
+    content => 'eula=true', # minecraft EULA must be accepted before minecraft service is started
   }
   file { '/etc/systemd/system/minecraft.service':
-    ensure => file,
-    source => 'puppet:///modules/minecraft/minecraft.service',
+    ensure => file, # minecraft service must be created before minecraft service is started
+    source => 'puppet:///modules/minecraft/minecraft.service', # minecraft service must be created before minecraft service is started
   }
   service { 'minecraft':
-    ensure => running,
-    enable => true,
+    ensure => running, # minecraft service must be started before minecraft service is started
+    enable => true, # minecraft service must be enabled before minecraft service is started
+    reqire => [package['java'], file["${install_dir}"], file['/etc/systemd/system/minecraft.service']], # minecraft service must be started before minecraft service is started
   }
 }
