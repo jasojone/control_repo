@@ -6,7 +6,7 @@ After=network.target
 
 [Service]
 WorkingDirectory=/opt/minecraft
-ExecStart=/usr/bin/java -Xmx1024m -Xms1024m -jar server.jar nogui
+ExecStart=/usr/bin/java -Xmx1024m -Xms1024m -jar minecraft_server.jar nogui
 
 [Install]
 WantedBy=multi-user.target
